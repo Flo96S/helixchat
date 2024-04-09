@@ -1,13 +1,5 @@
 <script setup lang="ts">
 let cameraActive = false;
-function GetVideoStream() {
-   navigator.mediaDevices.getUserMedia({
-      video: { width: 640, height: 480 },
-      audio: false
-   })
-      .then(stream => {
-      });
-}
 
 function DrawImage() {
    const canvas = document.createElement('canvas');
