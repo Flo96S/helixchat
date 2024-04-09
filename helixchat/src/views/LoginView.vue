@@ -11,8 +11,9 @@ function Login() {
 
 <template>
    <div class="about">
-      <h1>Login page</h1>
-      <input type="text" placeholder="Username"></input>
+      <img src="../assets/logo.webp" class="img" />
+      <h1>Login</h1>
+      <input type="text" placeholder="Username - RZ-Id"></input>
       <input type="password" placeholder="Password"></input>
       <div class="checkbox">
          <input id="loggedin" type="checkbox"></input>
@@ -31,6 +32,13 @@ function Login() {
 </template>
 
 <style>
+.img {
+   width: 50%;
+   height: auto;
+   margin: 0 auto;
+   display: block;
+}
+
 .noselect {
    user-select: none;
 }

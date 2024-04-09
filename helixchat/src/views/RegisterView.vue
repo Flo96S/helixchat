@@ -1,9 +1,10 @@
 <template>
    <div class="about">
-      <h1>Register page</h1>
-      <input type="text" placeholder="Username"></input>
-      <input type="text" placeholder="Name"></input>
-      <input type="text" placeholder="Email"></input>
+      <img src="../assets/logo.webp" class="img" />
+      <h1>Register</h1>
+      <input type="text" placeholder="Username - RZ-Id"></input>
+      <input type="text" placeholder="Nickname"></input>
+      <input type="text" placeholder="Fullname"></input>
       <input type="password" placeholder="Password"></input>
       <input type="password" placeholder="Password"></input>
       <div class="checkbox">
@@ -21,6 +22,13 @@
 </template>
 
 <style>
+.img {
+   width: 50%;
+   height: auto;
+   margin: 0 auto;
+   display: block;
+}
+
 .noselect {
    user-select: none;
 }
