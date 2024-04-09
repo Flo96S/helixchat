@@ -1,0 +1,72 @@
+<script setup lang="ts">
+import router from '@/router';
+
+function Login() {
+   //Login logic
+   console.log('Login');
+   localStorage.setItem('token', '1234');
+   router.replace("/");
+}
+</script>
+
+<template>
+   <div class="about">
+      <h1>Login page</h1>
+      <input type="text" placeholder="Username"></input>
+      <input type="password" placeholder="Password"></input>
+      <div class="checkbox">
+         <input id="loggedin" type="checkbox"></input>
+         <label class="noselect" for="loggedin">Stay loggedin</label>
+      </div>
+      <div class="buttons">
+         <button @click="() => {
+            Login();
+         }">Login</button>
+         <br /><br />
+         <button @click="() => {
+            $router.replace('/register');
+         }">To register</button>
+      </div>
+   </div>
+</template>
+
+<style>
+.noselect {
+   user-select: none;
+}
+
+.buttons {
+   margin-top: 16px;
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+}
+
+button {
+   width: 100%;
+   padding-block: 8px;
+}
+
+.checkbox {
+   display: flex;
+   flex-direction: row;
+   gap: 8px;
+}
+
+input[type="text"],
+input[type="password"] {
+   width: 100%;
+   padding: 10px;
+   margin: 10px 0;
+   border-radius: 5px;
+   border: 1px solid #ccc;
+}
+
+@media (min-width: 1024px) {
+   .about {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+   }
+}
+</style>

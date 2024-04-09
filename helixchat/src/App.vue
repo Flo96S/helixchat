@@ -1,22 +1,16 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import router from './router';
+
+
+//Check if login token is present
+const token = localStorage.getItem('token')
+if (!token) {
+  router.push('/login');
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/helix.png" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="HelixChat" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
   <RouterView />
 </template>
 
@@ -24,6 +18,7 @@ import HelloWorld from './components/HelloWorld.vue'
 header {
   line-height: 1.5;
   max-height: 100vh;
+  background-color: red;
 }
 
 .logo {
