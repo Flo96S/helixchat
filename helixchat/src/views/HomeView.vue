@@ -4,7 +4,7 @@ import NavBar from '../components/NavBar.vue'
 </script>
 
 <template>
-  <div class="padding">
+  <div>
     <NavBar />
     <TheWelcome />
   </div>

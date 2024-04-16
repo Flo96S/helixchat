@@ -2,20 +2,10 @@
 </script>
 
 <template>
-   <div class="navbar">
+   <div class="w-100 max-w-screen-xl bg-red flex">
       <a>Nav</a>
+      <img src="../assets/logo.webp" class="w-4 h-4 flex" />
    </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-   .navbar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 48px;
-      width: 100%;
-      background-color: aqua;
-   }
-}
-</style>
+<style></style>
