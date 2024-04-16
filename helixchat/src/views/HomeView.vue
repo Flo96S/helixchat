@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import NavBar from '../components/NavBar.vue'
+
+import NavBar from '@/components/NavBar.vue'
+import ChatComponent from '@/components/ChatComponent.vue'
 </script>
 
 <template>
-  <div class="padding">
+  <div>
     <NavBar />
     <div>
-      <a class="bg-white">Hello</a>
-    </div>
+      <div>
+        <ChatComponent ChatName="Chat 1" ChatId="0" />
+        <ChatComponent ChatName="Chat 2" ChatId="1" />
+      </div>
+   </div>
   </div>
 </template>
 

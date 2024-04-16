@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import router from '@/router';
 let cameraActive = false;
 
 function DrawImage() {
@@ -10,10 +11,8 @@ function DrawImage() {
    canvas.height = video.videoHeight;
    if (context == null) return;
    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-   const img = document.createElement('img');
+   const img = document.getElementById('takenphoto');
    img.src = canvas.toDataURL('image/png');
-   img.classList.add('image');
-   document.body.appendChild(img);
 }
 
 function SwitchOff() {
@@ -39,20 +38,33 @@ function RequireCamera() {
                video.play();
             };
          })
-         .catch(function (err0r) {
+         .catch(function (error) {
             console.log("Something went wrong!");
+            console.log(error);
          });
    }
+}
+
+function ToMain() {
+   console.log("To main");
+   router.replace("/");
 }
 </script>
 
 <template>
-   <div class="about">
+   <div>
+      <div class="h-12 bg-blue-500">
+         <p class="text-white text-xl" @click="() => ToMain()">◄</p>
+      </div>
       <h1>This is the camera</h1>
-      <video></video>
+      <video class="rounded-full w-2/4 aspect-square object-cover bg-black mx-auto"></video>
       <button @click="RequireCamera">Open camera</button>
       <button @click="DrawImage">Make image</button>
       <button @click="SwitchOff">Close Camera</button>
+      <div>
+         <img id="takenphoto" />
+         <p><img /></p>
+      </div>
    </div>
 </template>
 
