@@ -54,9 +54,8 @@ function ToMain() {
 <template>
    <div>
       <div class="h-12 bg-blue-500">
-         <p class="text-white text-xl" @click="() => ToMain()">◄</p>
+         <p class="text-white text-xl cursor-pointer" @click="() => ToMain()">◄</p>
       </div>
-      <h1>This is the camera</h1>
       <video class="rounded-full w-2/4 aspect-square object-cover bg-black mx-auto"></video>
       <button @click="RequireCamera">Open camera</button>
       <button @click="DrawImage">Make image</button>

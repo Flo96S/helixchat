@@ -38,15 +38,16 @@ const router = createRouter({
       component: () => import('../views/CameraView.vue')
     },
     {
-     path: '/settings',
-      name: 'settings',
+      path: '/profile',
+      name: 'profile',
       component: () => import('../views/SettingsView.vue')
     },
-     path: '/messages',
+    {
+      path: '/messages',
       name: 'messages',
       component: () => import('../views/MessageView.vue')
     }
- ]
+  ]
 })
 
 export default router
