@@ -6,7 +6,7 @@
       }">
          <img :src="image" class="w-6 h-6 mr-2 rounded-full aspect-square object-cover" />
          <p class="text-white">{{ name }}</p>
-         <p class="text-white">11:50</p>
+         <p class="text-white">{{ time }}</p>
       </div>
       <div class="flex-0">
          <p class="text-white">{{ text }}</p>
@@ -32,6 +32,10 @@ export default defineComponent({
          type: String,
          required: true,
       },
+      time: {
+         type: String,
+         required: true
+      }
    },
 });
 </script>

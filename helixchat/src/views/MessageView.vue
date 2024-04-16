@@ -12,13 +12,13 @@
             <MessageBubble name="Florian"
                image="https://www.nylabone.com/-/media/project/oneweb/nylabone/images/dog101/activities-fun/10-great-small-dog-breeds/maltese-portrait.jpg"
                text="Hello how are you? I just wanted to reach out to you to see if everything is fine." />
-            <MessageBubbleOthers name="Tim" text="Hey!"
+            <MessageBubbleOthers name="Tim" text="Hey!" time="12:10"
                image="https://www.hartz.com/wp-content/uploads/2022/04/small-dog-owners-1.jpg" />
             <MessageTimeDate date="14.04.2024" />
-            <MessageBubbleOthers name="Nina"
+            <MessageBubbleOthers name="Nina" time="13:50"
                text="All good! How are you? I just wanted to reach out to you to see if everything is fine."
                image="https://www.hartz.com/wp-content/uploads/2022/04/small-dog-owners-1.jpg" />
-            <MessageBubbleOthers name="Nina"
+            <MessageBubbleOthers name="Nina" time="18:12"
                text="All good! How are you? I just wanted to reach out to you to see if everything is fine."
                image="https://www.hartz.com/wp-content/uploads/2022/04/small-dog-owners-1.jpg" />
          </div>
