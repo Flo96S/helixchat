@@ -60,32 +60,121 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      theme: 'dark',
-      backgroundPattern: 'none',
-      chatBubbleColor: 'blue'
-    }
-  },
-  methods: {
-    saveSettings() {
-      // Implement your save settings logic here
-    },
-    logout() {
-      // Implement your logout logic here
-    },
-    deleteAccount() {
-      this.showDeleteConfirmation = true;
-    },
-    cancelDeleteAccount() {
-      this.showDeleteConfirmation = false;
-    },
-    confirmDeleteAccount() {
-      // Implement your delete account logic here
-      this.showDeleteConfirmation = false;
-    }
-  }
+<script setup lang="ts">
+import router from '@/router';
+import axios from 'axios';
+import { ref } from 'vue';
+
+interface SettingsFormData {
+  username: string;
+  email: string;
+  theme: string;
+  backgroundPattern: string;
+  chatBubbleColor: string;
 }
+
+const username = ref('');
+const email = ref('');
+const theme = ref('dark');
+const backgroundPattern = ref('none');
+const chatBubbleColor = ref('blue');
+const showDeleteConfirmation = ref(false);
+
+const saveSettings = async () => {
+  const formData: SettingsFormData = {
+    username: username.value,
+    email: email.value,
+    theme: theme.value,
+    backgroundPattern: backgroundPattern.value,
+    chatBubbleColor: chatBubbleColor.value
+  };
+
+  // Implement your save settings logic here
+};
+
+const logout = async () => {
+  let token = localStorage.getItem('token');
+  if(!token)
+  {
+    token = sessionStorage.getItem('token');
+  }
+  if (token) {
+    try {
+      const endpoint = "https://www2.hs-esslingen.de/~melcher/map/chat/api/";
+      const response = await axios.get(endpoint, {
+        params: {
+          request: "logout",
+          token: token,
+        },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+      });
+
+      if (response.data) {
+        sessionStorage.removeItem('token');
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('hash');
+        localStorage.removeItem('hash');
+        router.push('/login');
+      } else {
+        console.error('Logout failed:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  } else {
+    console.error('No token found. User may not be logged in.');
+  }
+};
+
+const deregister = async () => {
+  let token = localStorage.getItem('token');
+  if(!token)
+  {
+    token = sessionStorage.getItem('token');
+  }
+  if (token) {
+    try {
+      const endpoint = "https://www2.hs-esslingen.de/~melcher/map/chat/api/";
+      const response = await axios.get(endpoint, {
+        params: {
+          request: "deregister",
+          token: token,
+        },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+      });
+
+      if (response.data) {
+        sessionStorage.removeItem('token');
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('hash');
+        localStorage.removeItem('hash');
+        router.push('/login');
+      } else {
+        console.error('Deregistration failed:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Deregistration error:', error);
+    }
+  } else {
+    console.error('No token found. User may not be logged in.');
+  }
+};
+const deleteAccount = () => {
+  showDeleteConfirmation.value = true;
+};
+
+const cancelDeleteAccount = () => {
+  showDeleteConfirmation.value = false;
+};
+
+const confirmDeleteAccount = async () => {
+  showDeleteConfirmation.value = false;
+  deregister();
+};
 </script>
