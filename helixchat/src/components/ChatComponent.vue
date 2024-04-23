@@ -22,7 +22,7 @@ export default defineComponent({
    <div class="mx-auto mt-0 p-4 border-b border-slate-700 cursor-pointer" @click="() => {
       console.log('Chat opened');
       console.log(ChatId)
-      if (ChatId === '0') { $router.push(`/camera`); return; } $router.push(`/chat/${ChatId}`);
+      $router.push(`/messages`);
    }">
       <p class="font-semibold text-lg">{{ ChatName }}</p>
       <a class="line-clamp-2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Lorem ipsum dolor sit, amet
