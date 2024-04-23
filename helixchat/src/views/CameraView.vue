@@ -11,7 +11,7 @@ function DrawImage() {
    canvas.height = video.videoHeight;
    if (context == null) return;
    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-   const img = document.getElementById('takenphoto');
+   const img = document.getElementById('takenphoto') as HTMLInputElement;
    img.src = canvas.toDataURL('image/png');
 }
 
