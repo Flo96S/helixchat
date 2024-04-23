@@ -47,6 +47,12 @@ export default defineComponent({
       MessageTimeDate,
    },
 });
+
+function GetMessages() {
+   // Get messages from the server
+   let url = "https://www2.hs-esslingen.de/~melcher/map/chat/api/?request=test"
+
+}
 </script>
 
 
