@@ -11,7 +11,7 @@ if (!token) {
 </script>
 
 <template>
-  <RouterView />
+  <RouterView class="bg-gray-900" />
 </template>
 
 <style scoped></style>
