@@ -1,10 +1,10 @@
 <template>
    <div class="flex flex-col h-screen">
-      <nav class="bg-blue-800 text-white p-4 flex flex-col">
-         <button @click="goBack" class="text-white hover:underline">
-            <img src="../assets/arrowback.svg" />
-            Chat 1
+      <nav class="bg-blue-800 text-white pl-2 py-4 flex flex-row">
+         <button @click="goBack" class="text-white hover:underline px-2">
+            <a class="icon-left-open"></a>
          </button>
+         <a class="ml-2">Chat 1</a>
       </nav>
       <div class="flex-grow overflow-auto p-4">
          <div class="space-y-4">
@@ -33,6 +33,7 @@ import { defineComponent } from 'vue';
 import MessageBubble from '@/components/MessageBubble.vue';
 import MessageBubbleOthers from '@/components/MessageBubbleOthers.vue';
 import MessageTimeDate from '@/components/MessageTimeDate.vue';
+import axios from 'axios';
 
 
 export default defineComponent({
@@ -48,10 +49,34 @@ export default defineComponent({
    },
 });
 
-function GetMessages() {
-   // Get messages from the server
-   let url = "https://www2.hs-esslingen.de/~melcher/map/chat/api/?request=test"
 
+let messages = GetMessages("chatId");
+
+
+function GetMessages(chatId: string) {
+   return;
+   // Get messages from the server
+   let url = "https://www2.hs-esslingen.de/~melcher/map/chat/api/"
+   let token = localStorage.getItem("token") || sessionStorage.getItem("token");
+   if (token == null) {
+      return;
+   }
+   let axi = axios.create({
+      baseURL: url,
+      withCredentials: false,
+      headers: {
+         Accept: "application/json",
+         'Content-Type': 'application/json',
+      }
+   });
+   let data = axi.get("", {
+      params: {
+         request: "getMessages",
+         token,
+         chatId
+      }
+   });
+   return data.then;
 }
 </script>
 
