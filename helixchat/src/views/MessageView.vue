@@ -73,8 +73,7 @@ export default defineComponent({
    data() {
       return {
          Messages: [] as Message[],
-         UserId: "v9PGmyyL",
-         //UserId: localStorage.getItem("hash") || sessionStorage.getItem("hash"),
+         UserId: localStorage.getItem("hash") || sessionStorage.getItem("hash"),
       };
    },
    created() {
