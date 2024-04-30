@@ -4,7 +4,7 @@ import router from './router';
 
 
 //Check if login token is present
-const token = localStorage.getItem('token')
+const token = localStorage.getItem('token') || sessionStorage.getItem('token');
 if (!token) {
   router.push('/login');
 }
