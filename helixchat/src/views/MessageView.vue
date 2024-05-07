@@ -54,6 +54,12 @@ export default defineComponent({
             });
          } catch (error) {
             console.log(error);
+            console.log("Error while fetching messages");
+            localStorage.removeItem("token");
+            localStorage.removeItem("hash");
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("hash");
+            this.$router.replace("/login");
          }
       },
       goBack() {
