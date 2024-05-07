@@ -7,7 +7,7 @@
          <a class="ml-2">Chat 1</a>
       </nav>
       <div class="flex-grow overflow-auto p-4">
-         <div class="space-y-4 pb-12">
+         <div class="space-y-4 pb-12" ref="scroll">
             <template v-for="(message, index) in Messages" :key="index">
                <template v-if="message.userhash === UserId">
                   <MessageBubble :message="message" />
@@ -16,6 +16,7 @@
                   <MessageBubbleOthers :message="message" />
                </template>
             </template>
+            <div ref="bottomEl"></div>
          </div>
       </div>
       <InputField />
@@ -62,8 +63,8 @@ export default defineComponent({
       shouldRender(index: number) {
          return true;
       },
-      scrollToBottom() {
-         (this.$refs.bottomElement as HTMLDivElement).scrollIntoView({ behavior: "smooth" });
+      scrollDown() {
+         (this.$refs.bottomEl as HTMLDivElement).scrollIntoView({ behavior: 'smooth' });
       }
    },
    components: {
@@ -80,7 +81,7 @@ export default defineComponent({
    },
    created() {
       this.getMessages("chatId");
-   },
+   }
 });
 
 </script>
