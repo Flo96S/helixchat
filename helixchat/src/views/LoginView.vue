@@ -38,75 +38,101 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import PasswordToggle from '@/components/PasswordToggle.vue';
 import router from '@/router';
 import axios from 'axios';
-import { ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 interface LoginFormData {
   username: string;
   password: string;
 }
 
-const username = ref('');
-const password = ref('');
-const showPassword = ref(false);
-const stayLoggedIn = ref(false);
+export default defineComponent({
+  beforeMount() {
+    if (localStorage.getItem("hash") && localStorage.getItem("token")) {
+      router.replace('/');
+    } else if (sessionStorage.getItem("hash") && sessionStorage.getItem("token")) {
+      router.replace('/');
+    }
+  },
+  name: 'LoginView',
+  components: {
+    PasswordToggle,
+  },
+  setup() {
+    const username = ref('');
+    const password = ref('');
+    const showPassword = ref(false);
+    const stayLoggedIn = ref(false);
 
-const loginUser = async (formData: LoginFormData) => {
-  const endpoint = "https://www2.hs-esslingen.de/~melcher/map/chat/api/";
-  try {
-    const response = await axios.get(endpoint, {
-      params: {
-        request: "login",
-        userid: formData.username,
-        password: formData.password,
-      },
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-    });
+    const loginUser = async (formData: LoginFormData) => {
+      const endpoint = "https://www2.hs-esslingen.de/~melcher/map/chat/api/";
+      try {
+        const response = await axios.get(endpoint, {
+          params: {
+            request: "login",
+            userid: formData.username,
+            password: formData.password,
+          },
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+        });
 
-    const hash = response.data.hash;
-    const token = response.data.token;
+        const hash = response.data.hash;
+        const token = response.data.token;
 
-    if (stayLoggedIn.value) {
-      console.log("Staying logged in");
-      localStorage.setItem("hash", hash);
-      localStorage.setItem("token", token);
-    } else {
-      console.log("Not staying logged in");
-      sessionStorage.setItem("hash", hash);
-      sessionStorage.setItem("token", token);
+        if (stayLoggedIn.value) {
+          console.log("Staying logged in");
+          localStorage.setItem("hash", hash);
+          localStorage.setItem("token", token);
+        } else {
+          console.log("Not staying logged in");
+          sessionStorage.setItem("hash", hash);
+          sessionStorage.setItem("token", token);
+        }
+
+        return response.data;
+      } catch (error) {
+        console.error(error);
+        throw error;
+      }
+    };
+
+    const login = async () => {
+      const formData: LoginFormData = {
+        username: username.value,
+        password: password.value
+      };
+
+      try {
+        await loginUser(formData);
+        router.replace('/');
+      } catch (error) {
+        console.error("Login failed:", error);
+      }
+    };
+    function toggleShowPassword() {
+      showPassword.value = !showPassword.value;
     }
 
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+    function goToRegister() {
+      router.replace('/register');
+    }
 
-const login = async () => {
-  const formData: LoginFormData = {
-    username: username.value,
-    password: password.value
-  };
+    return {
+      username,
+      password,
+      showPassword,
+      stayLoggedIn,
+      login,
+      toggleShowPassword,
+      goToRegister,
+    };
+  },
 
-  try {
-    await loginUser(formData);
-    router.replace('/');
-  } catch (error) {
-    console.error("Login failed:", error);
-  }
-};
-function toggleShowPassword() {
-  showPassword.value = !showPassword.value;
-}
-
-function goToRegister() {
-  router.replace('/register');
-}
+});
 </script>
