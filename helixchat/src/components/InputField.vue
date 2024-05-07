@@ -20,12 +20,11 @@ export default defineComponent({
    },
    methods: {
       async sendMessage() {
-         console.log('send message');
          const url = "https://www2.hs-esslingen.de/~melcher/map/chat/api/";
          const token = localStorage.getItem("token") || sessionStorage.getItem("token");
          const chatId = 0;
          const text = this.getValue();
-         console.log(text);
+         if (text.length == 0) return;
          this.inputText = "";
          const response = await axios.post(url, {
             request: "postmessage",

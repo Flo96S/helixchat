@@ -22,7 +22,6 @@
    </div>
 </template>
 
-
 <script lang="ts">
 
 import { defineComponent } from 'vue';
@@ -62,6 +61,9 @@ export default defineComponent({
       },
       shouldRender(index: number) {
          return true;
+      },
+      scrollToBottom() {
+         (this.$refs.bottomElement as HTMLDivElement).scrollIntoView({ behavior: "smooth" });
       }
    },
    components: {
@@ -78,8 +80,9 @@ export default defineComponent({
    },
    created() {
       this.getMessages("chatId");
-   }
+   },
 });
+
 </script>
 
 
