@@ -1,5 +1,11 @@
 <template>
   <div class="settings flex flex-col items-center justify-center bg-gray-900 text-white">
+    <nav class="bg-blue-800 text-white pl-2 py-4 flex flex-row drop-shadow-lg w-full">
+         <button @click="goBack" class="text-white hover:underline px-2">
+            <a class="icon-left-open"></a>
+         </button>
+         <a class="ml-2">Settings</a>
+    </nav>
     <img src="../assets/logo.webp" class="img w-32 h-32 mb-4" />
     <h1 class="text-2xl mb-4">Settings</h1>
     <div class="w-full max-w-xs">
@@ -165,6 +171,10 @@ const deregister = async () => {
     console.error('No token found. User may not be logged in.');
   }
 };
+const goBack = () =>{
+  router.replace("/");
+};
+
 const deleteAccount = () => {
   showDeleteConfirmation.value = true;
 };

@@ -77,6 +77,13 @@ interface RegistrationFormData {
 }
 
 export default defineComponent({
+  beforeMount() {
+    if (localStorage.getItem("hash") && localStorage.getItem("token")) {
+      router.replace('/');
+    } else if (sessionStorage.getItem("hash") && sessionStorage.getItem("token")) {
+      router.replace('/');
+    }
+  },
   name: "RegisterView",
   components: {
     PasswordToggle,
