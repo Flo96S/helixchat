@@ -81,6 +81,13 @@ export default defineComponent({
    },
    created() {
       this.getMessages("chatId");
+   },
+   watch: {
+      Messages() {
+         this.$nextTick(() => {
+            this.scrollDown();
+         });
+      }
    }
 });
 
