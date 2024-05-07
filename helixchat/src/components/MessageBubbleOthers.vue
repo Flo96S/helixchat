@@ -37,8 +37,8 @@ export default defineComponent({
          for (let i = 0; i < this.message.userhash.length; i++) {
             hash += this.message.userhash.charCodeAt(i);
          }
-         color = (hash % 8) + 1;
-         let colors = ["bg-blue-700", "bg-green-900", "bg-teal-800", "bg-lime-900", "bg-yellow-900", "bg-indigo-900", "bg-pink-700", "bg-purple-900"];
+         color = (hash % 9);
+         let colors = ["bg-blue-900", "bg-green-900", "bg-teal-800", "bg-lime-900", "bg-yellow-900", "bg-indigo-900", "bg-pink-900", "bg-purple-900"];
          return colors[color];
       }
    }
