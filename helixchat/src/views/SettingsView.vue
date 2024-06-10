@@ -10,14 +10,6 @@
     <h1 class="text-2xl mb-4">Settings</h1>
     <div class="w-full max-w-xs">
       <div class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-4 mb-4">
-        <div class="mb-4">
-          <label for="username" class="block text-gray-200 text-sm font-bold mb-2">Username</label>
-          <input id="username" type="text" placeholder="Username" class="w-full appearance-none border rounded py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline" />
-        </div>
-        <div class="mb-4">
-          <label for="email" class="block text-gray-200 text-sm font-bold mb-2">Email</label>
-          <input id="email" type="email" placeholder="Email" class="w-full appearance-none border rounded py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline" />
-        </div>
         <div class="bg-gray-800 p-4 rounded">
         <label for="theme">Theme</label>
         <select v-model="theme" id="theme" class="bg-gray-700 w-full mb-4">
@@ -25,7 +17,7 @@
           <option value="light">Light</option>
         </select>
         <label for="background-pattern">Background Pattern</label>
-        <select v-model="backgroundPattern" id="background-pattern" class="bg-gray-700 w-full mb-4">
+        <select v-model="selectedBackgroundImage" @change="changeBackground" id="background-pattern" class="bg-gray-700 w-full mb-4">
           <option value="none">None</option>
           <option value="pattern1">Pattern 1</option>
           <option value="pattern2">Pattern 2</option>
@@ -40,7 +32,7 @@
      </div>
         <div class="mb-4">
           <label for="font-size" class="block text-gray-200 text-sm font-bold mb-2">Font Size</label>
-          <select id="font-size" class="w-full appearance-none border rounded py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline">
+          <select id="font-size" v-model="selectedFontSize" @change="changeFontSize" class="w-full appearance-none border rounded py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline">
             <option value="small">Small</option>
             <option value="medium">Medium</option>
             <option value="large">Large</option>
@@ -67,20 +59,22 @@
 </template>
 
 <script setup lang="ts">
-import router from '@/router';
+import { mapMutations } from 'vuex';
+import { Commit } from 'vuex';
 import axios from 'axios';
 import { ref } from 'vue';
+import router from '@/router';
 
 interface SettingsFormData {
-  username: string;
-  email: string;
   theme: string;
   backgroundPattern: string;
   chatBubbleColor: string;
 }
 
-const username = ref('');
-const email = ref('');
+const selectedFontSize = ref(localStorage.getItem('fontSize') || 'medium');
+const selectedTheme = ref(localStorage.getItem('theme') || 'dark');
+const selectedBackgroundImage = ref(localStorage.getItem('backgroundImage') || 'stars');
+
 const theme = ref('dark');
 const backgroundPattern = ref('none');
 const chatBubbleColor = ref('blue');
@@ -88,14 +82,11 @@ const showDeleteConfirmation = ref(false);
 
 const saveSettings = async () => {
   const formData: SettingsFormData = {
-    username: username.value,
-    email: email.value,
-    theme: theme.value,
-    backgroundPattern: backgroundPattern.value,
+    theme: selectedTheme.value,
+    backgroundPattern: selectedBackgroundImage.value,
     chatBubbleColor: chatBubbleColor.value
   };
 
-  // Implement your save settings logic here
 };
 
 const logout = async () => {
@@ -186,5 +177,42 @@ const cancelDeleteAccount = () => {
 const confirmDeleteAccount = async () => {
   showDeleteConfirmation.value = false;
   deregister();
+};
+
+const changeBackground = () => {
+  switch (selectedBackgroundImage.value) {
+    case 'night':
+      setBackground('img/night.jpeg');
+      break;
+    case 'cloud':
+      setBackground('img/cloud.jpg');
+      break;
+    case 'stars':
+      setBackground('img/space.jpg');
+      break;
+    case 'default':
+      setBackground(null);
+      break;
+    default:
+      console.log('Background image not found:', selectedBackgroundImage.value);
+      break;
+  }
+};
+
+const changeFontSize = () => {
+  switch (selectedFontSize.value) {
+    case 'small':
+      document.documentElement.style.fontSize = '10px';
+      break;
+    case 'medium':
+      document.documentElement.style.fontSize = '14px';
+      break;
+    case 'large':
+      document.documentElement.style.fontSize = '16px';
+      break;
+    default:
+      console.log('Font size not found:', selectedFontSize.value);
+      break;
+  }
 };
 </script>
