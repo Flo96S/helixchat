@@ -55,7 +55,6 @@ export default defineComponent({
       async getPhoto() {
          if(this.message.imageid !== undefined) {
             //load image
-            console.log("LOAD IMAGE");
             try{
                const response = await axios.get("https://www2.hs-esslingen.de/~melcher/map/chat/api/", {
                   params: {

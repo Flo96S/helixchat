@@ -10,8 +10,9 @@
       <div class="flex h-full gap-1">
          <div class="text-black relative w-full" >
             <input class=" pl-2 rounded-xl w-full h-full" placeholder="Nachricht" v-model="inputText" />
-            <button class="absolute right-0 h-full px-2 text-2xl" @click="toggleSmileys">&#x1f4ce;</button>
+            <button class="absolute right-0 h-full px-1 text-2xl" @click="toggleSmileys">&#x1f4ce;</button>
          </div>
+         <button class="bg-blue-800 text-white icon-camera w-12 rounded-xl" @click="toCamera"></button>
          <button class="bg-blue-800 text-white icon-paper-plane w-12 rounded-xl" @click="sendMessage"></button>
       </div>
    </div>
@@ -31,6 +32,9 @@ export default defineComponent({
       }
    },
    methods: {
+      toCamera(){
+         this.$router.replace("/camera");
+      },
       toggleSmileys() {
          this.showsmile = !this.showsmile;
       },
