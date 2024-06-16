@@ -1,12 +1,14 @@
 <template>
-   <div class="flex flex-col h-screen">
+   <div class="flex flex-col h-screen" :style="{ backgroundImage: `url(/backgrounds/${backgroundImage}.jpg)` }">
       <nav class="bg-blue-800 text-white pl-2 py-4 flex flex-row drop-shadow-lg">
          <button @click="goBack" class="text-white hover:underline px-2">
             <a class="icon-left-open"></a>
          </button>
          <a class="ml-2">Chat 1</a>
       </nav>
-      <div class="flex-grow overflow-auto p-4">
+      <div class="flex-grow overflow-auto p-4"   
+      :class="{ 'bg-cover': true, 'bg-center': true, 'bg-no-repeat': true, 'bg-fixed': true }"
+      :style="{ backgroundImage: `url(/backgrounds/${backgroundImage}.jpg)` }">
          <div class="space-y-4 pb-12" ref="scroll">
             <template v-for="(message, index) in Messages" :key="index">
                <template v-if="message.userhash === UserId">
@@ -24,17 +26,38 @@
 </template>
 
 <script lang="ts">
-
-import { defineComponent } from 'vue';
+import InputField from '@/components/InputField.vue';
+import { Message } from '@/components/Message';
 import MessageBubble from '@/components/MessageBubble.vue';
 import MessageBubbleOthers from '@/components/MessageBubbleOthers.vue';
-import MessageTimeDate from '@/components/MessageTimeDate.vue';
-import InputField from '@/components/InputField.vue';
 import axios from 'axios';
-import { Message } from '@/components/Message';
-
+import { computed, defineComponent } from 'vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
+   setup() {
+      const store = useStore();
+      const backgroundImage = computed(() => store.state.backgroundImage);
+
+      return { backgroundImage };
+   },
+   components: {
+      MessageBubble,
+      MessageBubbleOthers,
+      InputField
+   },
+   data() {
+      return {
+         Messages: [] as Message[],
+         UserId: localStorage.getItem("hash") || sessionStorage.getItem("hash"),
+      };
+   },
+   computed: {
+      backgroundImage(): string {
+         const store = useStore();
+         return store.state.backgroundImage;
+      }
+   },
    methods: {
       async getMessages(chatId: string) {
          try {
@@ -65,24 +88,9 @@ export default defineComponent({
       goBack() {
          this.$router.replace("/");
       },
-      shouldRender(index: number) {
-         return true;
-      },
       scrollDown() {
-         (this.$refs.bottomEl as HTMLDivElement).scrollIntoView({ behavior: 'smooth' });
+         (this.$refs.bottomEl as HTMLDivElement).scrollIntoView({});
       }
-   },
-   components: {
-      MessageBubble,
-      MessageBubbleOthers,
-      MessageTimeDate,
-      InputField
-   },
-   data() {
-      return {
-         Messages: [] as Message[],
-         UserId: localStorage.getItem("hash") || sessionStorage.getItem("hash"),
-      };
    },
    created() {
       this.getMessages("chatId");
@@ -95,10 +103,4 @@ export default defineComponent({
       }
    }
 });
-
 </script>
-
-
-<style>
-/* Add any custom styles here */
-</style>
