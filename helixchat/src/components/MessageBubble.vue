@@ -25,7 +25,10 @@ export default defineComponent({
          type: Object as () => Message,
          required: true,
       },
-   },   
+   },
+   mounted: function() {
+      this.getPhoto();
+   },
    methods: {
       async getPhoto() {
          if(this.message.imageid !== undefined) {
@@ -53,6 +56,7 @@ export default defineComponent({
                const base64 = btoa(binary);
                let base64Img = `data:image/png;base64,${base64}`;
                this.imagesrc = base64Img;
+               console.log(base64Img);
                
             } catch(error) {
                console.log("Could not load images");
