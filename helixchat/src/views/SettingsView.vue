@@ -1,38 +1,32 @@
 <template>
   <div class="settings flex flex-col items-center justify-center bg-gray-900 text-white">
     <nav class="bg-blue-800 text-white pl-2 py-4 flex flex-row drop-shadow-lg w-full">
-         <button @click="goBack" class="text-white hover:underline px-2">
-            <a class="icon-left-open"></a>
-         </button>
-         <a class="ml-2">Settings</a>
+      <button @click="goBack" class="text-white hover:underline px-2">
+        <a class="icon-left-open"></a>
+      </button>
+      <a class="ml-2">Settings</a>
     </nav>
     <img src="../assets/logo.webp" class="img w-32 h-32 mb-4" />
     <h1 class="text-2xl mb-4">Settings</h1>
     <div class="w-full max-w-xs">
       <div class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-4 mb-4">
         <div class="bg-gray-800 p-4 rounded">
-        <label for="theme">Theme</label>
-        <select v-model="theme" id="theme" class="bg-gray-700 w-full mb-4">
-          <option value="dark">Dark</option>
-          <option value="light">Light</option>
-        </select>
-        <label for="background-pattern">Background Pattern</label>
-        <select v-model="selectedBackgroundImage" @change="changeBackground" id="background-pattern" class="bg-gray-700 w-full mb-4">
-          <option value="none">None</option>
-          <option value="pattern1">Pattern 1</option>
-          <option value="pattern2">Pattern 2</option>
-          <option value="pattern3">Pattern 3</option>
-        </select>
-        <label for="chat-bubble-color">Chat Bubble Color Theme</label>
-        <select v-model="chatBubbleColor" id="chat-bubble-color" class="bg-gray-700 w-full mb-4">
-          <option value="blue">Blue</option>
-          <option value="red">Red</option>
-          <option value="green">Green</option>
-        </select>
-     </div>
+          <label for="theme">Theme</label>
+          <select v-model="theme" id="theme" class="bg-gray-700 w-full mb-4">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+          <label for="background-pattern">Background Pattern</label>
+          <select v-model="backgroundImage" @change="changeBackground" id="background-pattern" class="bg-gray-700 w-full mb-4">
+            <option value="none">None</option>
+            <option value="Network">Network</option>
+            <option value="Network_2">Network 2</option>
+            <option value="ReactionGlass">Reaction Glass</option>
+          </select>
+        </div>
         <div class="mb-4">
-          <label for="font-size" class="block text-gray-200 text-sm font-bold mb-2">Font Size</label>
-          <select id="font-size" v-model="selectedFontSize" @change="changeFontSize" class="w-full appearance-none border rounded py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline">
+          <label for="font-size" class="block text-gray-200 ">Font Size</label>
+          <select id="font-size" v-model="fontSize" @change="changeFontSize" class="w-full appearance-none border rounded py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline">
             <option value="small">Small</option>
             <option value="medium">Medium</option>
             <option value="large">Large</option>
@@ -51,7 +45,8 @@
       <div class="mb-4">
         <p class="text-white text-lg">Are you sure you want to delete your account? This action cannot be undone.</p>
       </div>
-      <div class="flex items-center justify-center mb-4"><button @click.prevent="cancelDeleteAccount" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Cancel</button>
+      <div class="flex items-center justify-center mb-4">
+        <button @click.prevent="cancelDeleteAccount" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Cancel</button>
         <button @click.prevent="confirmDeleteAccount" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4" type="button">Confirm</button>
       </div>
     </div>
@@ -59,34 +54,34 @@
 </template>
 
 <script setup lang="ts">
-import { mapMutations } from 'vuex';
-import { Commit } from 'vuex';
-import axios from 'axios';
-import { ref } from 'vue';
 import router from '@/router';
+import axios from 'axios';
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
 
-interface SettingsFormData {
-  theme: string;
-  backgroundPattern: string;
-  chatBubbleColor: string;
-}
+const store = useStore();
 
-const selectedFontSize = ref(localStorage.getItem('fontSize') || 'medium');
-const selectedTheme = ref(localStorage.getItem('theme') || 'dark');
-const selectedBackgroundImage = ref(localStorage.getItem('backgroundImage') || 'stars');
+const theme = computed<string>({
+  get: () => store.state.theme,
+  set: (value: String) => store.commit('setTheme', value),
+});
 
-const theme = ref('dark');
-const backgroundPattern = ref('none');
-const chatBubbleColor = ref('blue');
+const backgroundImage = computed<string>({
+  get: () => store.state.backgroundImage,
+  set: (value: String) => store.commit('setBackgroundImage', value),
+});
+
+const fontSize = computed<string>({
+  get: () => store.state.fontSize,
+  set: (value: String) => store.commit('setFontSize', value),
+});
+
 const showDeleteConfirmation = ref(false);
 
-const saveSettings = async () => {
-  const formData: SettingsFormData = {
-    theme: selectedTheme.value,
-    backgroundPattern: selectedBackgroundImage.value,
-    chatBubbleColor: chatBubbleColor.value
-  };
-
+const saveSettings = () => {
+  store.commit('setFontSize', fontSize.value);
+  store.commit('setTheme', theme.value);
+  store.commit('setBackgroundImage', backgroundImage.value);
 };
 
 const logout = async () => {
@@ -180,27 +175,23 @@ const confirmDeleteAccount = async () => {
 };
 
 const changeBackground = () => {
-  switch (selectedBackgroundImage.value) {
-    case 'night':
-      setBackground('img/night.jpeg');
+  switch (backgroundImage.value) {
+    case 'Network':
       break;
-    case 'cloud':
-      setBackground('img/cloud.jpg');
+    case 'ReactionGlass':
       break;
-    case 'stars':
-      setBackground('img/space.jpg');
+    case 'Network_2':
       break;
     case 'default':
-      setBackground(null);
       break;
     default:
-      console.log('Background image not found:', selectedBackgroundImage.value);
+      console.log('Background image not found:', backgroundImage.value);
       break;
   }
 };
 
 const changeFontSize = () => {
-  switch (selectedFontSize.value) {
+  switch (fontSize.value) {
     case 'small':
       document.documentElement.style.fontSize = '10px';
       break;
@@ -211,8 +202,9 @@ const changeFontSize = () => {
       document.documentElement.style.fontSize = '16px';
       break;
     default:
-      console.log('Font size not found:', selectedFontSize.value);
+      console.log('Font size not found:', fontSize.value);
       break;
   }
 };
+
 </script>
