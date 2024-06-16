@@ -50,7 +50,7 @@ export default defineComponent({
                return;
             }
             this.Messages = response.data.messages.map((message: any) => {
-               return new Message(message.chatid, message.id, message.text, message.time, message.userhash, message.usernickname);
+               return new Message(message.chatid, message.id, message.text, message.time, message.userhash, message.usernickname, message.photoid);
             });
          } catch (error) {
             console.log(error);

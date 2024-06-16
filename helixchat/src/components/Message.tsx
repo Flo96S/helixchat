@@ -5,14 +5,16 @@ export class Message {
    time: Date;
    userhash: string;
    usernickname: string;
+   imageid: string;
 
-   constructor(chatid: number, id: number, text: string, time: string, userhash: string, usernickname: string) {
+   constructor(chatid: number, id: number, text: string, time: string, userhash: string, usernickname: string, imageid: string) {
       this.chatid = chatid;
       this.id = id;
       this.text = text;
       this.time = this.parseTime(time) || new Date();
       this.userhash = userhash;
       this.usernickname = usernickname;
+      this.imageid = imageid;
    }
 
    parseTime(datetime: string): Date | null {
