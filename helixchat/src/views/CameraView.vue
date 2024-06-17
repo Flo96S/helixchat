@@ -1,9 +1,7 @@
 
 <script lang="ts">
-import router from '@/router';
-import { defineComponent } from "vue";
 import axios from 'axios';
-import { request } from 'http';
+import { defineComponent } from "vue";
 
 export default defineComponent({
    name: "Camera",
@@ -121,9 +119,9 @@ export default defineComponent({
 <template>
    <div>
       <div class="h-12 bg-blue-500 items-center flex">
-         <p class="text-white text-xl cursor-pointer icon-left-open" @click="() => this.ToMain()">Camera</p>
+         <p class="text-white text-xl cursor-pointer icon-left-open" @click="() => ToMain()">Camera</p>
       </div>
-      <div v-if="this.cameraVisible">
+      <div v-if="cameraVisible">
          <video class="rounded-xl w-11/12 object-cover bg-black mt-2 mx-auto"></video>
       </div>
       <div class="mt-2 px-2">
@@ -131,19 +129,19 @@ export default defineComponent({
          <p><img /></p>
       </div>
 
-      <div v-if="this.photoTaken" class="absolute bottom-4 w-full">
+      <div v-if="photoTaken" class="absolute bottom-4 w-full">
          <div class="text-center mb-4">
             Are you sure you want to post this image?
          </div>
          <div class="flex px-4 w-full justify-between">
-            <div @click="this.DenyPhoto" class="bg-red-700 h-20 w-20 rounded-full items-center justify-center flex icon-cancel text-4xl cursor-pointer">
+            <div @click="DenyPhoto" class="bg-red-700 h-20 w-20 rounded-full items-center justify-center flex icon-cancel text-4xl cursor-pointer">
          </div>
-         <div @click="this.ConfirmPhoto" class="bg-green-700 h-20 w-20 rounded-full items-center justify-center flex icon-ok text-4xl cursor-pointer">
+         <div @click="ConfirmPhoto" class="bg-green-700 h-20 w-20 rounded-full items-center justify-center flex icon-ok text-4xl cursor-pointer">
          </div>
          </div>
       </div>
-      <div v-if="!this.photoTaken" class="absolute bottom-4 flex px-4 w-full justify-between">
-         <div @click="this.DrawImage" class="bg-slate-300 h-20 mx-auto w-20 text-black rounded-full items-center justify-center flex icon-camera text-3xl cursor-pointer">
+      <div v-if="!photoTaken" class="absolute bottom-4 flex px-4 w-full justify-between">
+         <div @click="DrawImage" class="bg-slate-300 h-20 mx-auto w-20 text-black rounded-full items-center justify-center flex icon-camera text-3xl cursor-pointer">
          </div>
       </div>
    </div>
