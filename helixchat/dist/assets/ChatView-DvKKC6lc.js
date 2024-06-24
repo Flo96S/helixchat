@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o,a as s}from"./index-LACCAfl5.js";const c={},a={class:"about"},_=s("h1",null,"Chat",-1),n=[_];function r(d,i){return t(),o("div",a,n)}const l=e(c,[["render",r]]);export{l as default};
